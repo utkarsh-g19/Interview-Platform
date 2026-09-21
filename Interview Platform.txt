@@ -1,0 +1,23 @@
+Interview Platform
+
+Flow of the project :
+
+cd frontend
+-npm create vite@latest . // @(write version here or latest for latest version) , . creates the vite app within the working directory //
+-npm install
+-npm run dev
+
+cd backend
+-npm init -y
+-npm i express mongoose dotenv // dotenv is used to access env variables
+-go to package.json and replace the given script with dev script "dev": "node server.js" // this means whenever we run a script named dev , run the following command ; so basically we start the server directly by using npm run dev//
+-add/modify "type" : "module" instead of "commonjs" to be able to use import/export instead of require
+-add a --watch to the dev script in package.json so any new changes automatically restart the server // or install a dependency like nodemon
+-npm intall nodemon -D // -D indicates that the dependency is only required for development , not during deployment//
+-replace "node --watch server.js" with "nodemon server.js"
+
+-next we move on to better structuring of backend , similar to frontend we need our application under an src file. So we create src inside backend and transfer our server.js under src
+-create more folders under src like controllers , models , routes , middlewares and lib ( lib is used for configurations )
+-to use configs and secrets we first store them inside a .env file and to access them we need to import dotenv from dotenv and then run doten.config() in every file where env variables are required
+-better practice is to globalize dotenv so lesser code is required in each file which needs env variables i.e. we create env.js inside lib and import and run the dotenv config function , then export the dotenv variables as an object after storing the env variables in that object.
+-each file requiring dotenv now imports this object and uses its keys for the corresponding env variable

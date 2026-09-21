@@ -1,0 +1,9 @@
+Tech stack :
+
+Backend : node js , express
+Database : Mongodb
+Styling : tailwind , daisyUI 
+Data fetching/caching : TanStack query 
+Authentication : Clerk
+Streaming/Video call : Stream Video
+Background jobs : Inngest
