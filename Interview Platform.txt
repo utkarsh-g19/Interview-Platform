@@ -21,3 +21,23 @@ cd backend
 -to use configs and secrets we first store them inside a .env file and to access them we need to import dotenv from dotenv and then run doten.config() in every file where env variables are required
 -better practice is to globalize dotenv so lesser code is required in each file which needs env variables i.e. we create env.js inside lib and import and run the dotenv config function , then export the dotenv variables as an object after storing the env variables in that object.
 -each file requiring dotenv now imports this object and uses its keys for the corresponding env variable
+-make a github repo and add the project to github
+-while pushing the project I made a mistake where I accidently added , committed .env before adding it to gitignore and pushed. I could have unstaged the files and added .env to gitignore before committing but I was careless , as soon as I committed all the files and pushed the code the only option I was left with was removing .env from being tracked through rm --cached command and push the code again asap so the new code overwrites the previous one.
+
+22/09/2026
+cd ..
+-we create a package json file in the global section (outside frontend/backend) and replace the existing script with a production script i.e. when we push our code to github and deploy using github as a source through a cloud deployment platform like vercel , since we didnt push node modules vercel doesn't have the dependencies to run the working app , so we tell vercel through a script to install those dependencies 
+we write those commands inside this script which we add to global package json 
+npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend
+-npm run build in frontend is used to create an optimized folder called "dist" for production/deployment bundling all the necessary frontend application src files required for deployement 
+
+cd backend 
+-add another script in package json , "start" : "node src/server.js" , in deployement we are not making changes again and again unlike in developement , so we don't need nodemon to keep watching for changes because any changes pushed to github will automatically trigger a server restart in deployment. Better to not add unneccessary dependencies to save storage.
+
+Now there is a problem , currently our server and react app exists on 2 different ports locally , but we want both the app and server to run on a single domain when we deploy , inorder to do that we will serve the app as a static asset to the server and deploy the server
+-add NODE_ENV = production in .env
+-add the above changes to env.js
+-in server js import path and define __dirname , make the code production ready by converting frontend app into static asset and delivering the frontend whenever a route which is not defined in server js is called
+
+cd ..
+-add "start" : "npm run start --prefix backend" in global package json , when it runs it connects the frontend and delivers both frontend and backend on the same port
