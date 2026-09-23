@@ -41,3 +41,13 @@ Now there is a problem , currently our server and react app exists on 2 differen
 
 cd ..
 -add "start" : "npm run start --prefix backend" in global package json , when it runs it connects the frontend and delivers both frontend and backend on the same port
+
+Branching
+using vs code (not git command)
+-created a new branch and added changes to stage
+-committed 
+-pushed
+-created a PR , merged
+using git command
+-on local main , pulled the latest remote main
+
