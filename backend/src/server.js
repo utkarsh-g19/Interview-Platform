@@ -5,8 +5,8 @@ import path from "path"; // study why this is even required
 const app = express();
 const __dirname = path.resolve(); // what does path.resolve() do
 
-app.get("/", (req, res) => {
-  res.status(200).json({ msg: "success from api!" });
+app.get("/health", (req, res) => {
+  res.status(200).json({ msg: "success from api! Good health" });
 });
 
 //make ready for production

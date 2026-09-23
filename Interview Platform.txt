@@ -51,3 +51,6 @@ using vs code (not git command)
 using git command
 -on local main , pulled the latest remote main
 
+23/09/25
+deployment
+-my setup served the app through express server while vercel requires the app directly as it treats express as serverless function , therefore vercel was not the right deployement platform 
