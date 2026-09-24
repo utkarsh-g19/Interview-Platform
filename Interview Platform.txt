@@ -54,3 +54,21 @@ using git command
 23/09/25
 deployment
 -my setup served the app through express server while vercel requires the app directly as it treats express as serverless function , therefore vercel was not the right deployement platform 
+
+Mongoatlas
+-created a new project and a new cluster , copied DB url(connection string) , username and pass for my DB
+utkarsham825_db_user
+qIYA6kmS0MpX3xOh
+Connection string : mongodb+srv://utkarsham825_db_user:qIYA6kmS0MpX3xOh@cluster0.mzp9uin.mongodb.net/InterviewDB?appName=Cluster0
+
+24/09/26
+-understood and solved an error related to DNS lookup. My public IP = device ip + ISP's modifications , so it keeps changing ( dynamic ). MongoAtlas has 2 way security , it also checks whether an authorized IP is requesting connection before it authenticates the credentials being provided to access DB. Even before this , to reach MongoAtlas i.e. to reach the cluster where IP is checked , first step is where DNS lookup is performed by the ISP/Router. My ISP denied/refused to perform that , node js uses standard DNS queries for finding a record's address but I was using a special query ( SRV records aka Service records ) which is usually blocked or not supported by most DNS providers. Therefore changing DNS servers from my ISP's to Google's which is an advanced DNS server supporting all kinds of DNS lookups fixed the problem
+-added 0.0.0.0/0 in MongoAtlas IP list so it allows all IPs ( dynamic IP problem fixed ) , smoother for developement
+
+authentication ( clerk )
+using clerk docs
+-npm install @clerk/react
+-created a .env in frontend and added publishable key
+-imported clerk in main.jsx 
+-wrapped my app within clerk component 
+-changed sign in mode from default redirect to modal to prompt an overlay sign up instead of redirecting to a sign up page

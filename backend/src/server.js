@@ -1,6 +1,7 @@
 import express from "express";
 import { ENV } from "./lib/env.js";
 import path from "path"; // study why this is even required
+import { connectDB } from "./lib/db.js";
 
 const app = express();
 const __dirname = path.resolve(); // what does path.resolve() do
@@ -18,4 +19,12 @@ if (ENV.NODE_ENV == "production") {
   });
 }
 
-app.listen(ENV.PORT, () => console.log("server is running on ", ENV.PORT));
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(ENV.PORT, () => console.log("server is running on ", ENV.PORT));
+  } catch (error) {
+    console.log("Error starting the server");
+  }
+};
+startServer();
