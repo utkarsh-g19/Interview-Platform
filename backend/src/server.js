@@ -3,7 +3,8 @@ import { ENV } from "./lib/env.js";
 import path from "path"; // study why this is even required
 import { connectDB } from "./lib/db.js";
 import cors from "cors";
-import { inngest } from "./lib/inngest.js";
+import { serve } from "inngest/express";
+import { inngest, functions } from "./lib/inngest.js";
 
 const app = express();
 const __dirname = path.resolve(); // what does path.resolve() do
