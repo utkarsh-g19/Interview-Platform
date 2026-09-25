@@ -72,3 +72,35 @@ using clerk docs
 -imported clerk in main.jsx 
 -wrapped my app within clerk component 
 -changed sign in mode from default redirect to modal to prompt an overlay sign up instead of redirecting to a sign up page
+
+Inngest and Stream 
+-added inggest, stream and clerk env variables to backend env
+-clerk sends a webhook ( basically a message/request telling something happened , in this case user created )
+
+git
+-pushed changes to git on dbsetup branch
+-accidently pushed to main , deleted that commit along with the changes on main using git commands after making a new branch dbsetup and pushing those changes
+
+25/09/26
+render
+-added all env variables to render's env section
+
+clerk-db connection
+-created User model in model.js
+-npm i inngest@latest
+-npm i cors
+-created inngest.js in backend's src/lib
+
+-studied about CORS ( cross origin resource sharing ) which allows or restricts cross origins to read frontend responses ( basically if any other origin makes a request to my backend API , and the backend sends response , I can either allow or prevent that response to be seen on the frontend/browser(JS) of the requesting origin using CORS )
+
+NOTE : Origin can be same domain but different ports or completely different domains
+eg. localhost 3000 , localhost 5000 -> same host , different ports
+eg. bank.com , evil.com -> different hosts
+
+basically CORS controls whether JavaScript in a browser is allowed to read the DATA returned by your API
+CORS = baharwale 🚪( different origins )
+Authentication = kaun ghar mein hai? 🪪
+Authorization = ghar mein hone ke baad kya access hai? 🔑
+
+-added all env variables from .env in backend to env.js in backend/src/lib
+-added client url in env and render's env ( localhost in developement and website's url in production )

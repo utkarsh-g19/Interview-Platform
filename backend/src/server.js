@@ -2,9 +2,16 @@ import express from "express";
 import { ENV } from "./lib/env.js";
 import path from "path"; // study why this is even required
 import { connectDB } from "./lib/db.js";
+import cors from "cors";
+import { inngest } from "./src/lib/inngest.js";
 
 const app = express();
 const __dirname = path.resolve(); // what does path.resolve() do
+
+//middlewares
+app.use(express.json());
+app.use(cors({ origin: ENV.CLIENT_URL, credentials: true })); //credentials true means allowing browser to send cookies on req
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 app.get("/health", (req, res) => {
   res.status(200).json({ msg: "success from api! Good health" });
@@ -21,6 +28,9 @@ if (ENV.NODE_ENV == "production") {
 
 const startServer = async () => {
   try {
+    if (!ENV.DB_URL) {
+      throw new Error("DB_URL is not defined in env variables!");
+    }
     await connectDB();
     app.listen(ENV.PORT, () => console.log("server is running on ", ENV.PORT));
   } catch (error) {
