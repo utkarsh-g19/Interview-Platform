@@ -24,4 +24,5 @@ const userSchema = mongoose.Schema(
     timestamps: true, //createdAt , updatedAt -> can be used for "member since 2026"
   },
 );
+const User = mongoose.model("User", userSchema);
 export default User;
