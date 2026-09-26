@@ -104,3 +104,18 @@ Authorization = ghar mein hone ke baad kya access hai? 🔑
 
 -added all env variables from .env in backend to env.js in backend/src/lib
 -added client url in env and render's env ( localhost in developement and website's url in production )
+-made sure to type INNJEST instead of INJEST , to avoid any env errors in production
+
+Clerk website
+-under configure , searched for webhooks under developer
+-added an inngest webhook , connecting my inngest account to clerk which automatically creates the inngest endpoint
+-subscribed to user.created() , user.deleted() events under subscriptions on the webhook page
+
+Innjest.js
+-impoted innjest , connectDB and User model
+-with the help of docs ( nodejs -> create innjest client ) , created sync user and delete user functions , created the innjest client and exported those two functions
+
+Server.js
+-imported {serve} from injest/express ( docs )
+-imported innjest client and functions from /lib/innjest.js
+-created an innjest middleware/endpoint (added the same endpoint to my website url and added that entire combined route to innjest's app sync so that when an event is triggered , clerk sends webhook to innjest's servers and innjest calls that api ( combined url mywebsite_url/api/innjest ) to do the remaining job and report back to innjest
