@@ -106,6 +106,7 @@ Authorization = ghar mein hone ke baad kya access hai? 🔑
 -added client url in env and render's env ( localhost in developement and website's url in production )
 -made sure to type INNJEST instead of INJEST , to avoid any env errors in production
 
+26/09/26
 Clerk website
 -under configure , searched for webhooks under developer
 -added an inngest webhook , connecting my inngest account to clerk which automatically creates the inngest endpoint
@@ -119,3 +120,24 @@ Server.js
 -imported {serve} from injest/express ( docs )
 -imported innjest client and functions from /lib/innjest.js
 -created an innjest middleware/endpoint (added the same endpoint to my website url and added that entire combined route to innjest's app sync so that when an event is triggered , clerk sends webhook to innjest's servers and innjest calls that api ( combined url mywebsite_url/api/innjest ) to do the remaining job and report back to innjest
+
+Stream
+-created stream.js under lib
+-npm i stream-chat
+-imported StreamChat from stream-chat , imported ENV
+-created a stream chat client for my backend and gave it my api key so it connects to my stream chat servers and also gave it my api secret so the stream chat server allows my backend to do privelleged stream operations
+-using getInstance() instead of new StreamChat() because get instance only creates the client once , calling it again would only refer to the same client created before helping avoid duplicate client/connections
+( A client is a part of app which is used for communication between the app and a 3rd party )
+-created functions to upsert ( create/update ) a stream user and delete a stream user
+-imported those functions in innjest.js as innjest is responsible for communicating with DB and stream chat
+
+27/09/26
+Server side auth
+-npm install @clerk/express
+-imported {clerkMiddleware} from "@clerk/express" and used it as a middleware within server.js
+-created a new middleware ( protectRoute.js )
+-protectRoute is an array of 2 middlewares
+getAuth()->clerk's server side authentication
+custom middleware -> to add user after fetching them from mongodb using clerk id, as a field to req object
+NOTE : when you pass an array (protectRoute) of middlewares to express , it automatically flattens and executes the middlewares sequentially one by one
+
