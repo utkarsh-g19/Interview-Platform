@@ -156,6 +156,9 @@ Server.js
 
 (funny moment but imp -> Deployment failed because of not writing .js extension while importing chatController and protectRoute because of ESM i.e. ECMA Script Module , import-path resolution which requires us to add extensions for proper import/export)
 
+(shifted from getAuth to requireAuth as i had written the code based on requireAuth which is deprecated)
+NOTE : shift back to getAuth after project completion , requireAuth is to be removed in the next major version of Clerk
+
 
 
 

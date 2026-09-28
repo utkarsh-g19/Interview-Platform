@@ -1,8 +1,8 @@
-import { getAuth } from "@clerk/express";
+import { requireAuth } from "@clerk/express";
 import User from "../models/User.js";
-
+// switch to getAuth after project completion
 export const protectRoute = [
-  getAuth({ signInUrl: "/sign-in" }),
+  requireAuth({ signInUrl: "/sign-in" }),
   async (req, res, next) => {
     try {
       const clerkId = req.auth().userId;
@@ -10,7 +10,7 @@ export const protectRoute = [
         return res.status(401).json({ msg: "Unauthorized - invalid token" });
       }
       //find user in db by clerk id
-      const user = User.findOne({ clerkId });
+      const user = await User.findOne({ clerkId });
       if (!user) {
         return res.status(401).json({ msg: "User not found" });
       }

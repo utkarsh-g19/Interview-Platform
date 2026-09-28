@@ -12,10 +12,11 @@ const app = express();
 const __dirname = path.resolve(); // what does path.resolve() do
 
 //middlewares
+app.use(clerkMiddleware()); //express for clerk docs specifiy to use clerkMiddleware before any other middlewares so auth is established for the req
 app.use(express.json());
 app.use(cors({ origin: ENV.CLIENT_URL, credentials: true })); //credentials true means allowing browser to send cookies on req
 app.use("/api/inngest", serve({ client: inngest, functions }));
-app.use(clerkMiddleware());
+
 app.use("/api/chat", chatRoutes);
 
 app.get("/health", (req, res) => {
