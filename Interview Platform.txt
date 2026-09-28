@@ -154,6 +154,8 @@ Server.js
 -imported chatRoutes from src/routes
 -added an /api/chat/<chatRoutes> middleware
 
+(funny moment but imp -> Deployment failed because of not writing .js extension while importing chatController and protectRoute because of ESM i.e. ECMA Script Module , import-path resolution which requires us to add extensions for proper import/export)
+
 
 
 
