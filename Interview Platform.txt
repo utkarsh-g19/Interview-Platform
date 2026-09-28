@@ -141,3 +141,19 @@ getAuth()->clerk's server side authentication
 custom middleware -> to add user after fetching them from mongodb using clerk id, as a field to req object
 NOTE : when you pass an array (protectRoute) of middlewares to express , it automatically flattens and executes the middlewares sequentially one by one
 
+ChatToken
+-inorder to communicate with Stream , we need to create a token
+-created a chatController in controllers.js to create a chat token , imported chatClient from lib/stream , used chatClient's inbuilt createToken function and passed the user's clerk id to build a token for that user , exported that token along with other user details
+-created a chatRoute within src/routes
+-imported express , getStreamToken from chatController , protectRoute from middlewares
+-created a router , created a /token route , added protectRoute and getStreamToken middlewares to the route and then imported router
+
+(previous task : added clerk secret key to .env and env.js and in render's env variables)
+
+Server.js
+-imported chatRoutes from src/routes
+-added an /api/chat/<chatRoutes> middleware
+
+
+
+
