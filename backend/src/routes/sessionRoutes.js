@@ -1,5 +1,5 @@
 import express from "express";
-import { protectRoute } from "../middlewares/protectRoute";
+import { protectRoute } from "../middlewares/protectRoute.js";
 import {
   createSession,
   getActiveSessions,
