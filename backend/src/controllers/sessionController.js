@@ -92,6 +92,11 @@ export async function joinSession(req, res) {
     const session = await Session.findById(id);
 
     if (!session) return res.status(404).json({ message: "Session not found" }); // when invalid session id is received
+    if (session.host.toString() === userId.toString()) {
+      return res
+        .status(400)
+        .json({ message: "Host cannnot join their own session!" });
+    }
 
     // if session is already full , at max only 2 members within a session -> owner , 1 participant
     if (session.participant)
@@ -128,8 +133,6 @@ export async function endSession(req, res) {
     if (session.status === "completed") {
       return res.status(400).json({ message: "Session is already completed!" });
     }
-    session.status = "completed";
-    await session.save();
 
     //delete stream video call
     const call = streamClient.video.call("default", session.callId);
@@ -137,6 +140,10 @@ export async function endSession(req, res) {
     //delete stream chat channel
     const channel = chatClient.channel("messaging", session.callId);
     await channel.delete();
+
+    //end session -> perform resource cleanup ( deleting stream chats/video etc ) before ending the session to ensure smoother process , for eg. if deletion of video call or stream chat fails the session is still marked completed without proper cleanup of resources
+    session.status = "completed";
+    await session.save();
 
     res.status(200).json({ session, message: "session ended successfully" });
   } catch (error) {
