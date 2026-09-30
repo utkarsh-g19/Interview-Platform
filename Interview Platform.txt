@@ -26,7 +26,7 @@ cd backend
 
 22/09/2026
 cd ..
--we create a package json file in the global section (outside frontend/backend) and replace the existing script with a production script i.e. when we push our code to github and deploy using github as a source through a cloud deployment platform like vercel , since we didnt push node modules vercel doesn't have the dependencies to run the working app , so we tell vercel through a script to install those dependencies 
+-we create a package json file in the global section (outside frontend/backend) and replace the existing script with a production script i.e. when we push our code to github and deploy using github as a source through a cloud deployment platform like vercel or render , since we didnt push node modules vercel/render doesn't have the dependencies to run the working app , so we tell vercel/render through a script to install those dependencies 
 we write those commands inside this script which we add to global package json 
 npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend
 -npm run build in frontend is used to create an optimized folder called "dist" for production/deployment bundling all the necessary frontend application src files required for deployement 
@@ -53,7 +53,7 @@ using git command
 
 23/09/25
 deployment
--my setup served the app through express server while vercel requires the app directly as it treats express as serverless function , therefore vercel was not the right deployement platform 
+-my setup served the app through express server while vercel requires the app directly as it treats express as serverless function , therefore vercel was not the right deployment platform 
 
 Mongoatlas
 -created a new project and a new cluster , copied DB url(connection string) , username and pass for my DB
@@ -75,7 +75,7 @@ using clerk docs
 
 Inngest and Stream 
 -added inggest, stream and clerk env variables to backend env
--clerk sends a webhook ( basically a message/request telling something happened , in this case user created )
+-clerk sends a webhook ( basically a message/request telling something happened , in this case user created/deleted )
 
 git
 -pushed changes to git on dbsetup branch
@@ -159,6 +159,25 @@ Server.js
 (shifted from getAuth to requireAuth as i had written the code based on requireAuth which is deprecated)
 NOTE : shift back to getAuth after project completion , requireAuth is to be removed in the next major version of Clerk
 
+28th
+-completed previous documentation and revised the docs
 
+29th
+cd backend
+-npm i @stream-io/node-sdk
+-imported StreamClient in /lib/stream.js
+-created a streamClient object and passed the api key and secret
 
+platform Sessions
+-created Session model
+-in models , created Session.js , imported mongoose , created session Schema with various fields and timestamps and exported it
+-in routes , created a sessionRoute.js , made multiple session routes like createSession , getActiveSession , getMyRecentSessions , getSessionById , joinSession , endSession. Exported the router
+-in controllers , created sessionController.js , and defined createSession and getActiveSessions 
 
+30/09/26
+-defined the remaining 4/6 session functions
+NOTE : express doesnt care whether you use message or msg in json's return value as long as you use the same key in frontend
+
+(one doubt , createSession creates video and chat channel , endSession deletes them , and nowhere else those channels are being created again , then would they be used in MyRecentSessions ? because those channels no longer exist in MyRecentSession since those are a collection of sessions which have been completed/ended)
+
+- all 6 session functions were mainly written to talk with mongodb/stream and the frontend
