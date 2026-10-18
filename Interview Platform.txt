@@ -2,6 +2,8 @@ Interview Platform
 
 Flow of the project :
 
+
+BACKEND 
 cd frontend
 -npm create vite@latest . // @(write version here or latest for latest version) , . creates the vite app within the working directory //
 -npm install
@@ -185,3 +187,83 @@ NOTE : express doesnt care whether you use message or msg in json's return value
 - writing backend requires you to be clever , for eg. is someone wants to end session they can end session by clicking endsession on frontend , but if the session is already ended they dont see any option to end session , but what if the same request is sent directly to backend bypassing frontend , they we do need to check whether session is already completed or not before writing session.status = "completed"
 - very good point related to resource cleanup before marking anything complete ;
 in endSession controller perform resource cleanup ( deleting stream chats/video etc ) before ending the session to ensure smoother process , for eg. if deletion of video call or stream chat fails the session is still marked completed without proper cleanup of resources
+- understood what Sync changes does -> it pulls from github and checks whether the origin branch has any new commits , if no new commits it simply pushes the new local commits to origin main ; if new commits exists , git preserves both either through merge or rebase ( to know about merge/rebase read your github notes -> write the explanation later )
+
+
+FRONTEND
+1/10/26
+
+cd frontend
+Tailwind css docs
+-npm install tailwindcss @tailwindcss/vite
+-in vite config , import tailwindcss from '@tailwindcss/vite' , plugins: [
+    tailwindcss(),
+  ],
+-in index.css , @import "tailwindcss";
+-in vscode extension , install tailwind css Intellisence , it gives suggestions of classes when your writing classes
+
+Daisy UI docs
+- its a tailwind css plugin which reduces the number of classes to be written to design a component using tailwind css / write tailwind faster/lesser with daisyUI
+- npm i -D daisyui@latest
+- in index.css , @plugin "daisyui"; under @import "tailwindcss";
+
+2/10/26
+-npm install react-router
+-in main.jsx wrap the app which is already wrapped within clerk component with BrowserRouter Component , so the app gets access to all features of BrowserRouter , also import {BrowserRouter} from react-router in main.jsx
+-now go to App.jsx , delete everything within return and use <Routes> , write all the routes within this , App.jsx's return will only be used for routing , import {Routes} from "react-router"
+-install ES7 vscode extension for writting snippets easily -> use "rfce" to create a react function and export it , use "rafce" to create a react arrow function and export it
+-within App.jsx using useUser() hook from clerk to get user related info.
+Hook is basically a special function that lets React component access React features or some external library's state/logic
+-import Navigate from react router , if user is not signed in then navigate them to home page
+
+
+
+NOTE : within <Routes><Routes/> all the component should be a route component
+-npm install react-hot-toast 
+Toast is used for react notifications ( alerts )
+-in App jsx , wrap the Routes within a react fragment ( I want to return multiple elements but I don't want to add any HTML element to wrap all those elements ) , add a Toaster component below Routes
+-wherever you want to use it , import toast and then within buttons : onClick{()=>{toast.success("this is a success");}} -> .success for a success based alert
+
+// setup done for -> tailwind , daisyUI , react-router , react-hot-toast
+// to do : react query aka tanstack query , axios
+
+7/10/26
+cd frontend
+
+Tanstack query
+-npm i @tanstack/react-query
+-using docs , in main.jsx import tanstack query along with the required components
+-wrap the app within the QueryClientProvider and give it a client (refer to docs) , it should also wrap the clerk component layer
+
+Axios
+-alternative to "fetch"
+-npm i axios
+-created axios.js in lib , created and defined an axios object and exported it
+
+10/10/26
+cd frontend
+-created a "lib" folder within src , deleted assets and created a "pages" folder within src as well
+-moved HomePage and ProblemsPage to "pages"
+
+Whats useEffect ?
+- a react component's job is to return UI , everytime it is rendered it runs again
+- anything other than return UI is not the main job of a react component , hence a side job like fetching data from external source,
+- useEffect is a react hook ( a function ) which is used to do these side jobs after the component has rendered. The classic use of useEffect is to fetch data
+
+Why Tanstack query over useEffect?
+
+
+Why axios over fetch ?
+-both are HTTP clients i.e. are used to send HTTP requests from browser to server and then receive responses from the server
+-Axios parses the JSON response automatically, so you access it using res.data.
+-Axios automatically rejects HTTP responses with status codes such as 404 and 500. With fetch, you need to check res.ok manually
+-Axios needs to be installed , while fetch is pre-installed inside JS
+-Axios provides a baseURL instance configuration unlike fetch
+
+19/10/26
+cd frontend
+-added a VITE_API_URL within .env
+-replaced the base url within axios config with the VITE_API_URL from .env
+
+This completes the frontend-tools-setup
+-created a new branch frontend-tools-setup and pushed changes on that branch
