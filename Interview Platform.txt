@@ -260,10 +260,61 @@ Why axios over fetch ?
 -Axios needs to be installed , while fetch is pre-installed inside JS
 -Axios provides a baseURL instance configuration unlike fetch
 
-19/10/26
+18/10/26
 cd frontend
 -added a VITE_API_URL within .env
 -replaced the base url within axios config with the VITE_API_URL from .env
 
 This completes the frontend-tools-setup
 -created a new branch frontend-tools-setup and pushed changes on that branch
+
+-creating the HomePage within src/pages/HomePage.jsx
+-wrapping the upper , mid and lower section of home page within a div
+-installed and imported lucide-react library [check whether it a library or a module -> lucid is an icon library] to use some icons 
+-created a nav component , created a div within nav containing a link and a signinbtn component
+-imported the required Link and SignInButton from react-router and @clerk/react
+(react-router provides Link component for navigation)
+Why link over anchor?
+-anchor tag refreshes the entire document while link is used to navigate to a different page by changing the url and rendering a different react component ( a different page ) without refreshing the entire document. React is a SPA ( single page application , so when we need to navigate within the application we usually use features like Link to prevent reloading of the entire page and instead rendering another component.
+-btw link also uses anchor internally for navigation but some enhancements are done to prevent reloading of the document
+-we usually use link when we need to navigate internally within a react application , and use anchor when we need to redirect to external links
+
+SPA vs Multi Page Application 
+-a MPA when receives a request to navigate to a different page , the server responds with a new HTML document along with the required resources each and every time
+-an SPA on the other hand receives the application's main HTML document and JS initially and whenever a request is made to navigate to a different page , react renders that page and changes the url without reloading the entire document
+-SPA shines when certain elements are to be updated and there are a lot of states in that page , so reloading that page would require the developer to ensure that each states are saved and restored properly before and after reload. SPA re-renders only the part which requires updation while not touching the static/not updated parts. 
+Eg. an interview platform , where the timer is on , the code is being written and executed , video call is going on , chat is going on etc many dynamic states. MPA can be used but it will only be more complicated to deal with all those dynamic states when using an MPA
+-MPA is usually used when there are less number of dynamic states or variables which dont change often. Eg. a college website
+General Knowledge : 
+-library -> reusable code which is used to perform a task
+-package -> code distributed as a unit , eg. through npm 
+-module -> JS code which can be exported as a functionality and imported anywhere else
+
+-within index.html , in the html component added a new field data-theme="forest" to set the html theme to forest which is imported from daisy ui through the daisy ui plugin within index.css
+-within index.css , added themes:all; within the daisy ui plugin to import all the available themes
+-writing the css for homepage
+-text-transparent removes the current text color and acquires the background color as the text color while bg-clip-text is really interesting daisy class , it clips the background color except the color inside the text , ultimately leaving the background gradient as the text color
+also , tracking-wider is used to increase letter spacing
+-transition is used to select all css animation based properties which are being used (transition-all -> selects all such properties , transition-transform -> selects all transform related properties ) , transform related properties are scale , rotate , translate ( move an element along some axis ). transform related properties don't effect the elements around them when they are activated
+A genuine css related question : 
+Why use bg-gradient-to-r bg-clip-text text-transparent instead of directly giving the font a gradient?
+The problem : CSS's color property only accepts a solid color and not a gradient color
+Solution : So the workaround is the give a transparent color to the text , give a gradient color to the background , clip the background color except the one covered by the text , ultimately giving the text the required gradient!
+
+tailwind is a utility first css framework.
+-utility means usefullness or ability of something to serve a purpose , in tailwind's case we are talking about the small utility classes used to design elements without having to write custom css for each of the element
+
+WHY REACT?
+Major point - easier to deal with dynamic elements ( in JS , we need to manually update both the value and DOM i.e. both the value and UI , unlike in case of React where we just set the new state )
+-React is particularly useful when many UI elements change in response to shared data or user interactions, For a simple static website, React may be unnecessary overhead.
+-react allows you to write JSX i.e. Javascript extension where you write the UI structure along with javascript logic. The UI structure may look like HTML but it is not. It creates React Elements internally which are then rendered by React DOM within the browser to create those elements
+-reusable components ( although even JS can be used to create reusale functions )
+
+19/10/26
+-completing the home page hero section
+-added a cursor pointer for every button in index.css
+
+17/11/26
+cd frontend
+-under App.jsx added authentication for a few routes , added another property for clerk's useUser() hook - isLoaded to check whether user data is loaded before using it. This prevents flickering effect ( for eg. if I visit home page , according to the route navigation if I am signed in and I am visiting home page I should be re-routed to dashboard , but sometimes clerk takes more time to confirm authentication due to which the UI goes like : Homepage -> re-route to Dashboard , which is an unnecessary visible re-routing , so we only run the app when the clerk's user data is loaded i.e. it confirms the authentication )
+if we dont use the isLoaded , isSigned is initially false due to clerk's slow auth check due to which the Homepage renders but as soon as isSignedin becomes true , the react state changes introducing a re-render which causes the re-routing to Dashboard 
